@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
-
-const inter = Inter({ subsets: ['latin'] })
+import Header from '@/components/Header'
+import { ThemeProvider } from '@/components/ThemeProvider'
+import ClientProviders from '@/components/ClientProviders'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -15,8 +15,23 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    // Put ClientProviders outside most 
+    <ClientProviders>
+      <html lang="en">
+        <body className="flex flex-col min-h-screen">
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {/* Header ở chỗ này */}
+            <Header />
+
+            {children}
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClientProviders>
   )
 }
